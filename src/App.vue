@@ -1,87 +1,46 @@
 <template>
   <div>
-    搜索：<input placeholder="请输入名称" v-model="searchKey" type="text">
-    <div>
-    <table style="margin-top: 10px;" width="500" cellpadding="0" border>
-      <thead>
-        <tr>
-          <th>物品</th>
-          <th>单价</th>
-          <th>数量</th>
-          <th>总价</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in searchData">
-          <td align="center">{{ item.name }}</td>
-          <td align="center">{{ item.price }}</td>
-          <td align="center"><button @click="item.num > 1 ? item.num-- : null">-</button>{{ item.num }}<button @click="item.num < 99 ? item.num++ : null">+</button></td>
-          <td align="center">{{ item.price * item.num }}</td>
-          <td align="center"><button @click="del(index)">删除</button></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr colspan="5" align="right">
-          <td>
-            <span>总价: {{ total }}</span>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
+    case1: <input v-model="message" type="text">
+    <hr>
+    case2: <input v-model="message2" type="text">
+    <hr>
+    case3: <input v-model="message3.foo.bar.name" type="text">
+    <hr>
+    case4: <input v-model="message3.foo.bar.age" type="text">
   </div>
 </template>
 <script setup lang='ts'>
-import { ref, reactive, computed } from 'vue';
-// let $total = ref<number>(0)
-let searchKey = ref<string>('')
-interface Data {
-  name: string,
-  price: number,
-  num: number
-}
-let data = reactive<Data[]>([
-  {
-    name: '小花的粉帽子',
-    price: 500,
-    num: 1
-  },
-  {
-    name: '小花的橙色鞋子',
-    price: 1000,
-    num: 1
-  },
-  {
-    name: '小花的白袜子',
-    price: 5,
-    num: 1
-  },
-])
+import { ref, reactive, watch } from 'vue';
+let message = ref<string>('小美')
+let message2 = ref<string>('大美')
 
-const total = computed(() => {
-  // 这里需要加一个return
-  return data.reduce((prev: number, next: Data) => {
-    return prev + next.num * next.price
-  }, 0)
+let message3 = ref({
+  foo: {
+    bar: {
+      name: "小美",
+      age: 18
+    }
+  }
 })
 
-// const total = () => {
-//   $total.value = data.reduce((prev: number, next: Data) =>{
-//     return prev + next.num * next.price
-//   }, 0)
-//   // 这里记得要加初始值0
-// }
-
-const searchData = computed(() => {
-  return data.filter((item) => {
-    return item.name.includes(searchKey.value)
-  })
+watch([message, message2], (newVal, oldVal) => {
+  console.log(newVal, oldVal);
 })
 
-const del = (index: number) => {
-  data.splice(index, 1)
-}
+
+watch(message3, (newVal, oldVal) => {
+  console.log(newVal, oldVal);
+}, {
+  deep: true  // 深度监听
+})
+
+watch(() => message3.value.foo.bar.age, (newVal, oldVal) => {
+  console.log(newVal, oldVal);
+}, {
+  // deep: true  // 深度监听
+  immediate: true, // 默认为false。如果为true，代表立即执行一次
+  flush: "pre" // 默认为pre 组件更新前调用，sync 同步执行，post 组件更新后调用
+})
 </script>
 <style scoped>
 
