@@ -15,6 +15,12 @@ const emit = defineEmits<{
 const send = () => {
     emit('on-click', '小美')
 }
+
+// 子组件向父组件 暴露元素/方法
+defineExpose({
+  name: "小花",
+  open: () => console.log(1)
+})
 </script>
 <style scoped>
 
