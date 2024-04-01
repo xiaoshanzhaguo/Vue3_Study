@@ -1,64 +1,69 @@
 <template>
-  <!-- <Card :content="'内容'"></Card> -->
-  <Tree :data="data"></Tree>
+  <div style="display: flex;">
+    <div @click="switchCom(item, index)" class="tabs" :class="[active == index ? 'active': '']" v-for="(item, index) in data">
+      <div>{{ item.name }}</div>
+    </div>
+  </div>
+  <component :is="comId"></component>
 </template>
 
-<script setup lang='ts'>
-import { ref, reactive } from 'vue'
-import Tree from './components/Tree.vue'
+<script lang="ts">
+import AVue from './components/example/A.vue'
+import BVue from './components/example/B.vue'
+import CVue from './components/example/C.vue'
 
-interface Tree {
-  name: string,
-  checked: boolean,
-  children?: Tree[]
+export default {
+  components: {
+    AVue,
+    BVue,
+    CVue
+  }
 }
+</script>
 
-// 递归组件mock数据
-const data = reactive<Tree[]>([
+<script setup lang='ts'>
+import { ref, reactive, markRaw, shallowRef } from 'vue'
+// import AVue from './components/example/A.vue'
+// import BVue from './components/example/B.vue'
+// import CVue from './components/example/C.vue'
+
+const comId = shallowRef('AVue')
+
+const active = ref(0)
+
+// 这里不用定义类型，因为它会推导出来
+const data = reactive([
   {
-    name: '1',
-    checked: false,
-    children: [
-      {
-        name: '1-1',
-        checked: false,
-      },
-      {
-        name: '1-2',
-        checked: true,
-      }
-    ]
+    name: 'A组件',
+    com: 'AVue'
   },
   {
-    name: '2',
-    checked: false,
-    children: [
-      {
-        name: '2-1',
-        checked: false,
-      }
-    ]
+    name: 'B组件',
+    com: 'BVue'
   },
   {
-    name: '3',
-    checked: false,
-    children: [
-      {
-        name: '3-1',
-        checked: false,
-        children: [
-          {
-            name: '3-1-1',
-            checked: false,
-          }
-        ]
-      }
-    ]
+    name: 'C组件',
+    com: 'CVue'
   }
 ])
+
+const switchCom = (item: any, index: any) => {
+  // 切换组件，切换id
+  comId.value = item.com
+  console.log(comId.value)
+  active.value = index
+}
 
 </script>
 
 <style scoped lang='less'>
-
+.tabs {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.active {
+  background-color: skyblue;
+  cursor: pointer;
+}
 </style>
