@@ -2,15 +2,10 @@
  <div class="content">
     <button @click="flag = !flag">switch</button>
     <transition
-        name="fade"
-        @before-enter="EnterFrom"
-        @enter="EnterActive"
-        @after-enter="EnterTo"
-        @enter-cancelled="EnterCancelled"
-        @before-leave="LeaveFrom"
-        @leave="Leave"
-        @after-leave="LeaveTo"
-        @leave-cancelled="LeaveCancelled"
+        appear
+        appear-from-class="from"
+        appear-active-class="active"
+        appear-to-class="to"
     >
         <div v-if="flag" class="box"></div>
     </transition>
@@ -70,6 +65,17 @@ const LeaveCancelled = (el: Element) => {
     width: 200px;
     height: 200px;
     background: red;
+}
+.from {
+    width: 0;
+    height: 0;
+}
+.active {
+    transition: all 2s ease;
+}
+.to {
+    width: 200px;
+    height: 200px;
 }
 /* // 开始过渡 */
 .fade-enter-from{
