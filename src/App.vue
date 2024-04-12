@@ -1,17 +1,11 @@
 <template>
-  <Suspense>
-    <template #default>
-      <SyncVue></SyncVue>
-    </template>
-    <template #fallback>
-      <skeletonVue></skeletonVue>
-    </template>
-  </Suspense>
+  <Content/>
 </template>
 
 <script setup lang='ts'>
 import { ref, reactive, defineAsyncComponent} from 'vue'
-const SyncVue = defineAsyncComponent(() => import('@/components/sync.vue'))
+import Content from './components/Content/index.vue'
+// const SyncVue = defineAsyncComponent(() => import('@/components/sync.vue'))
 // const SyncVue = defineAsyncComponent({
 // 	loadingComponent: () => import('@/components/sync.vue')
 // 	errorComponent: 加载失败时的组件,
