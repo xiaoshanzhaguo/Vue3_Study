@@ -1,23 +1,21 @@
 <template>
- <div class="A">
-    <button @click="emitB">派发一个事件</button>
+ <div>
+    <h1>我是A</h1>
+    <button @click="emit">emit</button>
  </div>
 </template>
 
 <script setup lang='ts'>
-import Bus from '../Bus'
-let flag = false
-const emitB = () => {
-    flag = !flag
-    Bus.emit('on-click', flag)
+// 引入当前组件的实例
+import { getCurrentInstance} from 'vue';
+
+const instance = getCurrentInstance()
+
+const emit = () => {
+    instance?.proxy?.$Bus.emit('on-xiaomei', 'mitt')
+    instance?.proxy?.$Bus.emit('on-xiaomei2', 'mitt2')
 }
 </script>
 
 <style scoped>
-.A {
-    width: 200px;
-    height: 200px;
-    color: #fff;
-    background: blue;
-}
 </style>
