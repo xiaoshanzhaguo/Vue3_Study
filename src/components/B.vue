@@ -1,16 +1,18 @@
 <template>
     <div class="B">
         <h1>B组件</h1>
-        {{ flag }}
+        {{ Flag }}
     </div>
 </template>
 
 <script setup lang='ts'>
-// 使用泛型字面量的格式
-type Props = {
-    flag: boolean
-}
-defineProps<Props>()
+import { ref } from 'vue'
+import Bus from '../Bus'
+
+let Flag = ref(false)
+Bus.on('on-click', (flag: boolean) => {
+    Flag.value = flag
+})
 </script>
 
 <style lang="less" scoped>

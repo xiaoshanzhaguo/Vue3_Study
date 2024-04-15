@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang='ts'>
-const emit = defineEmits(['on-click'])
+import Bus from '../Bus'
 let flag = false
 const emitB = () => {
     flag = !flag
-    emit('on-click', flag)
+    Bus.emit('on-click', flag)
 }
 </script>
 
