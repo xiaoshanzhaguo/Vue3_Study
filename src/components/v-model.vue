@@ -4,7 +4,7 @@
     {{ modelValue }}
     <div class="close"><button @click="close">关闭</button></div>
     <h3>我是v-model子组件 dialog</h3>
-    <div>内容：<input type="text"></div>
+    <div>内容：<input @input="change" :value="textVal" type="text"></div>
  </div>
 
 </template>
@@ -13,14 +13,21 @@ import { ref, reactive } from 'vue'
 // vue2 value  vue3  modelValue
 
 defineProps<{
-    modelValue: boolean
+    modelValue: boolean,
+    textVal: string
 }>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'update:textVal'])
 
 const close = () => {
     // 触发事件，并将值设为false
     emit('update:modelValue', false)
+}
+
+const change = (e: Event) => {
+    // 一开始推断的是event.target，无法读取value，因此这里要加类型断言
+    const target = e.target as HTMLInputElement
+    emit('update:textVal', target.value)
 }
 </script>
 <style scoped>
