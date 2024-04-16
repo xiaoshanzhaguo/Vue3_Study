@@ -1,52 +1,38 @@
 <template>
-
-  <div>
-    <button @click="flag = !flag">切换</button>
-    <!-- aaa为自定义参数, xiaomei为自定义修饰符 -->
-    <A v-if="flag" v-move:aaa.xiaomei="{background: 'green', flag: flag}"></A>
+  <div class="btns">
+    <button v-has-show="'shop:create'">创建</button>
+    <button v-has-show="'shop:edit'">编辑</button>
+    <button v-has-show="'shop:delete'">删除</button>
   </div>
-
  </template>
  
 <script setup lang='ts'>
-import { ref, Directive, DirectiveBinding} from 'vue';
-import A from './components/A.vue'
+import { ref, reactive} from 'vue';
+import type { Directive } from 'vue';
+// permission
+localStorage.setItem('userId', 'xiaomei-zm')
 
-let flag = ref<boolean>(true)
 
-type Dir = {
-  background: string
+// mock后台返回的数据
+const permission = [
+  'xiaomei-zm:shop:edit',
+  'xiaomei-zm:shop:create',
+  'xiaomei-zm:shop:delete'
+]
+
+const userId = localStorage.getItem('userId') as string
+const vHasShow: Directive<HTMLElement, string> = (el, bingding) => {
+  console.log(el, bingding)
+  if (!permission.includes(userId + ":" + bingding.value)) {
+    el.style.display = 'none'
+  }
 }
-
-const vMove: Directive = {
-  created () {
-    console.log('=====>creaed');
-  },
-  beforeMount () {
-    console.log('=====>beforeMount');
-  },
-  mounted (el: HTMLElement, dir: DirectiveBinding) {
-    // console.log(args);
-    console.log('=====>mounted');
-    // console.log(dir.value.background);
-    el.style.background = dir.value.background;
-  },
-  beforeUpdate () {
-    console.log('=====>beforeUpdate');
-  },
-  updated () {
-    console.log('=====>updated');
-  },
-  beforeUnmount () {
-    console.log('=====>beforeMount');
-  },
-  unmounted () {
-    console.log('=====>unmounted');
-  },
-}
-
 </script>
  
 <style lang="less" scoped>
-
+.btns {
+  button {
+    margin: 10px;
+  }
+}
 </style>
