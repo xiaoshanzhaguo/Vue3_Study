@@ -1,20 +1,50 @@
 <template>
 
   <div>
-    <h1>我是App.vue 父组件</h1>
+    <button @click="flag = !flag">切换</button>
+    <!-- aaa为自定义参数, xiaomei为自定义修饰符 -->
+    <A v-if="flag" v-move:aaa.xiaomei="{background: 'green', flag: flag}"></A>
   </div>
-  <div>isShow: {{ isShow }}</div>
-  <div>text: {{ text }}</div>
-  <div><button @click="isShow = !isShow">开关</button></div>
-  <vModelVue v-model:textVal.isBt="text" v-model="isShow"></vModelVue>
 
  </template>
  
 <script setup lang='ts'>
-import {ref, reactive} from 'vue';
-import vModelVue from './components/v-model.vue'
-const isShow = ref<boolean>(true)
-const text = ref<string>('小美')
+import { ref, Directive, DirectiveBinding} from 'vue';
+import A from './components/A.vue'
+
+let flag = ref<boolean>(true)
+
+type Dir = {
+  background: string
+}
+
+const vMove: Directive = {
+  created () {
+    console.log('=====>creaed');
+  },
+  beforeMount () {
+    console.log('=====>beforeMount');
+  },
+  mounted (el: HTMLElement, dir: DirectiveBinding) {
+    // console.log(args);
+    console.log('=====>mounted');
+    // console.log(dir.value.background);
+    el.style.background = dir.value.background;
+  },
+  beforeUpdate () {
+    console.log('=====>beforeUpdate');
+  },
+  updated () {
+    console.log('=====>updated');
+  },
+  beforeUnmount () {
+    console.log('=====>beforeMount');
+  },
+  unmounted () {
+    console.log('=====>unmounted');
+  },
+}
+
 </script>
  
 <style lang="less" scoped>
