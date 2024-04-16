@@ -14,6 +14,6 @@
     "skipLibCheck": true,
     "types": ["unplugin-vue-define-options/macros-global"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/reactive.js", "src/effct.js"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/reactive.js", "src/effct.js","plugin"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

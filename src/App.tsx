@@ -1,22 +1,22 @@
 // 写法1，返回一个渲染函数
-export default function () {
-    return (<div>小美</div>)
-}
+// export default function () {
+//     return (<div>小美</div>)
+// }
 
 // 写法2，使用optionsAPI
-import { defineComponent } from "vue";
-export default defineComponent({
-    data () {
-        return {
-            age: 23
-        }
-    },
+// import { defineComponent } from "vue";
+// export default defineComponent({
+//     data () {
+//         return {
+//             age: 23
+//         }
+//     },
     
-    // 在tsx中使用变量，是使用一个{}
-    render () {
-        return (<div>{this.age}</div>)
-    }
-})
+//     // 在tsx中使用变量，是使用一个{}
+//     render () {
+//         return (<div>{this.age}</div>)
+//     }
+// })
 
 // 6.插槽
 const A = (_, {slots}) => (<>
@@ -37,12 +37,12 @@ export default defineComponent({
     setup (props: Props, {emit}) {
         // 1. ref在template自动解包.value，而在tsx中不会
         const flag = ref(false)
-        return () => (<div v-show={flag.value}>小美setup</div>)
+        // return () => (<div v-show={flag.value}>小美setup</div>)
 
         // 2. v-if不支持，需要变换一种思想，使用三元表达式代替
-        return () => (<>
-            <div>{flag.value ? <div>true</div> : <div>false</div>}</div>
-        </>)
+        // return () => (<>
+        //     <div>{flag.value ? <div>true</div> : <div>false</div>}</div>
+        // </>)
 
         // 3. v-for，可以用map代替
         const data = [
@@ -56,22 +56,22 @@ export default defineComponent({
                 name: "小美3"
             }
         ]
-        return () => (<>
-            {
-                data.map(v => {
-                    return <div>{v.name}</div>
-                })
-            }
-        </>)
+        // return () => (<>
+        //     {
+        //         data.map(v => {
+        //             return <div>{v.name}</div>
+        //         })
+        //     }
+        // </>)
 
         // 4. v-bind，{}代替
-        return () => (<>
-            {
-                data.map(v => {
-                    return <div name={v.name}>{v.name}</div>
-                })
-            }
-        </>)
+        // return () => (<>
+        //     {
+        //         data.map(v => {
+        //             return <div name={v.name}>{v.name}</div>
+        //         })
+        //     }
+        // </>)
 
         // 5. props, emit
         const fn = (item: any) => {
@@ -79,30 +79,30 @@ export default defineComponent({
             console.log('触发了', item);
             emit('on-click', item)
         }
-        return () => (<>
-            <div>props: {props?.name}</div>
-            {
-                data.map(v => {
-                    return <div onClick={() => fn(v)} name={v.name}>{v.name}</div>
-                })
-            }
-        </>)
+        // return () => (<>
+        //     <div>props: {props?.name}</div>
+        //     {
+        //         data.map(v => {
+        //             return <div onClick={() => fn(v)} name={v.name}>{v.name}</div>
+        //         })
+        //     }
+        // </>)
 
         // 6. slots
         const slot = {
             default: () => (<div>小美default slots</div>),
             foo: () => (<div>小美 foo slots</div>)
         }
-        return () => (<>
-            <A v-slots={slot}></A>
-            <hr />
-            <div>props: {props?.name}</div>
-            {
-                data.map(v => {
-                    return <div onClick={() => fn(v)} name={v.name}>{v.name}</div>
-                })
-            }
-        </>)
+        // return () => (<>
+        //     <A v-slots={slot}></A>
+        //     <hr />
+        //     <div>props: {props?.name}</div>
+        //     {
+        //         data.map(v => {
+        //             return <div onClick={() => fn(v)} name={v.name}>{v.name}</div>
+        //         })
+        //     }
+        // </>)
 
         // 7. v-model
         const v = ref<string>('')
