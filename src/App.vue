@@ -1,10 +1,18 @@
 <template>
-  <button @click="flag = !flag">change flag</button>
-  <div>{{ flag }}</div>
+
+  <div>
+    <h1>我是App.vue 父组件</h1>
+  </div>
+  <div>isShow: {{ isShow }}</div>
+  <div><button @click="isShow = !isShow">开关</button></div>
+  <vModelVue v-model="isShow"></vModelVue>
+
  </template>
  
 <script setup lang='ts'>
-let flag = ref<boolean>(false)
+import {ref, reactive} from 'vue';
+import vModelVue from './components/v-model.vue'
+const isShow = ref<boolean>(true)
 </script>
  
 <style lang="less" scoped>
