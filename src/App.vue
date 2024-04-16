@@ -6,7 +6,7 @@
   <div>isShow: {{ isShow }}</div>
   <div>text: {{ text }}</div>
   <div><button @click="isShow = !isShow">开关</button></div>
-  <vModelVue v-model:textVal="text" v-model="isShow"></vModelVue>
+  <vModelVue v-model:textVal.isBt="text" v-model="isShow"></vModelVue>
 
  </template>
  

@@ -12,9 +12,12 @@
 import { ref, reactive } from 'vue'
 // vue2 value  vue3  modelValue
 
-defineProps<{
+const props = defineProps<{
     modelValue: boolean,
-    textVal: string
+    textVal: string,
+    textValModifiers?: {
+        isBt: boolean
+    }
 }>()
 
 const emit = defineEmits(['update:modelValue', 'update:textVal'])
@@ -27,7 +30,7 @@ const close = () => {
 const change = (e: Event) => {
     // 一开始推断的是event.target，无法读取value，因此这里要加类型断言
     const target = e.target as HTMLInputElement
-    emit('update:textVal', target.value)
+    emit('update:textVal', props?.textValModifiers?.isBt ? target.value + '变态' : target.value)
 }
 </script>
 <style scoped>
