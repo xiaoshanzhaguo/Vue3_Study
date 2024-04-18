@@ -1,17 +1,14 @@
 <template>
 
-<div>
-  <img id="img" width="300" height="300" src="./assets/images/1.jpg">
-</div>
+<div>{{ $env }}</div>
+<div>{{ $filters.format('的飞机') }}</div>
 
 </template>
 <script setup lang='ts'>
-import { ref, reactive } from 'vue'
-import useBase64 from './hooks'
-
-useBase64({el: '#img'}).then(res => {
-  console.log(res.baseUrl)
-})
+import { ref, reactive, getCurrentInstance } from 'vue'
+const app = getCurrentInstance()
+console.log(app?.proxy?.$filters.format('ts'))
+console.log(app?.proxy?.$env )
 </script>
 <style scoped>
 

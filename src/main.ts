@@ -8,6 +8,28 @@ const Mit = mitt()
 
 export const app = createApp(App)
 
+// $env在任何一个vue组件都可以直接去使用
+app.config.globalProperties.$env = 'dev'
+
+app.config.globalProperties.$filters = {
+    format<T> (str: T) {
+        return `小美-${str}`
+    }
+}
+
+type Filter = {
+    format<T>(str: T):string
+}
+
+// 解决App.vue里的报错
+declare module 'vue' {
+    export interface ComoponentCustomProperties {
+        $filters: Filter,
+        $env: string
+    }
+}
+
+
 // 在全局，扩展globalProperties的声明
 declare module 'vue' {
     export interface ComponentCustomProperties {
