@@ -3,10 +3,26 @@ import './style.css'
 import App from './App.vue'
 import Card from './components/Card.vue'
 import mitt from 'mitt'
+import Loading from './components/Loading'
 
 const Mit = mitt()
 
 export const app = createApp(App)
+
+app.use(Loading)
+
+
+type Lod = {
+    show: () => void,
+    hide: () => void
+}
+//编写ts loading 声明文件放置报错 和 智能提示
+declare module '@vue/runtime-core' {
+    export interface ComponentCustomProperties {
+        $loading: Lod
+    }
+
+}
 
 // $env在任何一个vue组件都可以直接去使用
 app.config.globalProperties.$env = 'dev'
